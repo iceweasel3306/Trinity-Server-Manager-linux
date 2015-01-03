@@ -1,0 +1,77 @@
+#!/bin/bash
+#TrinityCore Startup with Service checks
+#Iceweasel development, released under GNU General Public License (see readme)
+
+source config
+
+echo
+echo "Checking SSH and MySQL status..."
+
+SSH=$(sudo chkconfig ssh)
+MYSQL=$(sudo chkconfig mysql)
+APACHE=$(sudo chkconfig apache)
+
+echo
+echo "SSH status: $SSH"
+echo "MySQL status: $MYSQL"
+echo "Apache status: $APACHE"
+echo
+
+if ps ax | grep -v grep | grep mysqld > /dev/null
+  then
+	echo "Starting Server Daemons..."
+	echo
+  else
+	echo "MySQL is not running on localhost!"
+	echo "Exiting..."
+	exit 1
+fi
+
+if [ -p $AUTH_SCREEN ]
+  then
+	echo "Auth Server is already running"
+  else
+	echo "Starting Authserver..."
+	echo
+	screen -dmS auth $AUTH_LOC
+fi
+
+if [ -p $WORLD_SCREEN ]
+  then
+	echo "World Server is already running"
+	exit 1
+  else
+	echo "Starting Worldserver..."
+	echo
+	screen -dmS world $WORLD_LOC
+fi
+
+CHECK=$(screen -list)
+
+echo "$CHECK"
+
+cd $SCREEN_LOC
+
+
+echo -n "Do you to start start the restarter background process?(1(Y)/0(N)): "
+read ans
+if [ $ans == 1 ]
+then
+screen -dmS restarter $RPATH/restarter
+else
+echo
+fi
+
+ASTAT=$(ls *.auth)
+WSTAT=$(ls *.world)
+RSTAT=$(ls *.restarter)
+
+echo -n "User ID: "
+read sig
+echo
+echo -n "Comment: "
+read com
+echo
+
+echo "$RIGHT_NOW"
+echo "TrinityCore: Unix User: $USER | Time: $RIGHT_NOW | Id: $sig | Comment: $com | Status: $ASTAT : $WSTAT : $RSTAT" >> $START_LOG

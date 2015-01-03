@@ -1,0 +1,30 @@
+#!/bin/bash
+#Configuration/Variable Storage file
+#Iceweasel development, released under GNU General Public License (see readme)
+
+CONFIG="/home/$USER/server/config"
+
+RIGHT_NOW=$(date +"%x %r %Z")
+
+WORLD="worldserver"
+AUTH="authserver"
+
+SCREEN_CHK=$(ls /var/run/screen/S-$USER/)
+SCREEN_LOC="/var/run/screen/S-$USER/"
+
+AUTH_SCREEN="/var/run/screen/S-$USER/*.auth"
+WORLD_SCREEN="/var/run/screen/S-$USER/*.world"
+RESTARTER_SCREEN="/var/run/screen/S-$USER/*.restarter"
+
+START_LOG="/home/$USER/server/bin/logs/startup.log"
+ACC_LOG="/home/$USER/server/bin/logs/account.log"
+PERM_LOG="/home/$USER/server/bin/logs/access.log"
+CRASH_LOG="/home/$USER/server/bin/logs/crashes/$RIGHT_NOW"
+
+AUTH_LOC="./bin/authserver"
+WORLD_LOC="./bin/worldserver"
+
+APATH="/home/$USER/server/bin"
+WPATH="/home/$USER/server/bin"
+RPATH="/home/$USER/server"
+
