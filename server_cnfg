@@ -1,0 +1,47 @@
+#!/bin/bash
+#Quick Server config
+#Iceweasel development, released under GNU General Public License (see readme)
+
+echo "This script is in progress and is still incomplete."  
+echo "There may be bugs, typos, and other unexpected issues"
+echo "Ctrl+c to exit to the main menu"
+sleep 8
+clear
+
+echo -n "MySQL Username: "
+read umysql
+echo
+echo -n "MySQL Password: "
+read pmysql
+echo
+clear
+
+echo -n "Server directory name: "
+read server_dir
+sed -i "5i SERVER_DIR="\"$server_dir\""" config
+mawk '{gsub("/server/", "/$SERVER_DIR/"); gsub("/server", "/$SERVER_DIR"); print}' config > config1
+mv config $CONF/config2
+mv config1 $CONF/config
+echo
+
+echo "Server Config Files Directory name: "
+echo -n "press 1 for default $CONFI: "
+read confi
+if [ $confi == "1" ];
+   then
+   	source config
+   	echo "Using Default $CONFI"
+	sleep 1
+   else
+	echo "$confi"
+	mawk -v confi="$confi" '{gsub("/etc", confi); print}' config > config1
+	mv config $CONF/config_backup
+	mv config1 $CONF/config
+	rm $CONF/config2
+	sleep 1
+fi
+
+source config
+echo "$configs"
+
+Myline1=$(sed -n '2p' $CONFIGS/$AUTH_CONFIG)
