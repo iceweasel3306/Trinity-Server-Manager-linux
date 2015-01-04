@@ -1,16 +1,21 @@
 #!/bin/bash
 #Configuration/Variable Storage file
 #Iceweasel development, released under GNU General Public License (see readme)
+#Use the server configuration script in the main menu to set this file up for your system.
 
+
+
+LPATH="/home/$USER/server/bin/logs" #Logging Path
+APATH="/home/$USER/server/bin" #auth path
+WPATH="/home/$USER/server/bin" #world path
+RPATH="/home/$USER/server"
+
+WORLD="worldserver" #world binary
+AUTH="authserver" #auth binary
 
 CONF="/home/$USER/server"
 CONFI="/etc"
 CONFIGS="$CONF/$confi"
-
-RIGHT_NOW=$(date +"%x %r %Z")
-
-WORLD="worldserver"
-AUTH="authserver"
 
 SCREEN_CHK=$(ls /var/run/screen/S-$USER/)
 SCREEN_LOC="/var/run/screen/S-$USER/"
@@ -19,15 +24,15 @@ AUTH_SCREEN="/var/run/screen/S-$USER/*.auth"
 WORLD_SCREEN="/var/run/screen/S-$USER/*.world"
 RESTARTER_SCREEN="/var/run/screen/S-$USER/*.restarter"
 
-START_LOG="/home/$USER/server/bin/logs/startup.log"
-ACC_LOG="/home/$USER/server/bin/logs/account.log"
-PERM_LOG="/home/$USER/server/bin/logs/access.log"
-CRASH_LOG="/home/$USER/server/bin/logs/crashes/$RIGHT_NOW"
+START_LOG="$LPATH/startup.log"
+RESTART_LOG="$LPATH/restart.log"
+ACC_LOG="$LPATH/account.log"
+PERM_LOG="$LPATH/access.log"
+CRASH_LOG="$LPATH/$RIGHT_NOW"
 
-AUTH_LOC="./bin/authserver"
-WORLD_LOC="./bin/worldserver"
+AUTH_LOC="./bin/$AUTH"
+WORLD_LOC="./bin/$WORLD"
+RESTARTER_LOC="./restarter"
 
-APATH="/home/$USER/server/bin"
-WPATH="/home/$USER/server/bin"
-RPATH="/home/$USER/server"
-
+FIRST_START=1
+RIGHT_NOW=$(date +"%x %r %Z")

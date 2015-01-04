@@ -1,5 +1,5 @@
 #!/bin/bash
-#Screen restarter (runs in background)
+#Server Restarter
 #Iceweasel development, released under GNU General Public License (see readme)
 
 source config
@@ -16,7 +16,7 @@ while :
 		killall -9 $WORLD
 		screen -S world -X kill &>/dev/null
 		screen -wipe world
-		echo "Restarted World Server @ $RIGHT_NOW | Crashlog: $CRASH_LOG.world" | tee -a $START_LOG
+		echo "$RIGHT_NOW: $WORLD | Crashlog: $CRASH_LOG.world" | tee -a $RESTART_LOG
 	      	screen -dmS world $WORLD_LOC
 		echo
 		sleep 1
@@ -33,7 +33,7 @@ while :
 		screen -S auth -X kill &>/dev/null
 		screen -wipe auth
 		echo
-		echo "Restarted Auth Server @ $RIGHT_NOW | Crashlog: $CRASH_LOG.auth" | tee -a $START_LOG
+		echo "$RIGHT_NOW: $AUTH | Crashlog: $CRASH_LOG.auth" | tee -a $RESTART_LOG
 	   	screen -dmS auth $AUTH_LOC
 		echo
 		sleep 1
@@ -42,5 +42,4 @@ while :
 		sleep 30
 		
 	fi
-	      
     done
