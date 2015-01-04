@@ -2,7 +2,10 @@
 #Configuration/Variable Storage file
 #Iceweasel development, released under GNU General Public License (see readme)
 
-CONFIG="/home/$USER/server/config"
+
+CONF="/home/$USER/server"
+CONFI="/etc"
+CONFIGS="$CONF/$confi"
 
 RIGHT_NOW=$(date +"%x %r %Z")
 

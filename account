@@ -90,7 +90,7 @@ while [ opt != '' ]
 		read -rsp $'Press any key to continue...\n' -n1 key
 		   echo "Deleting account $delacc ..."
 		   screen -S world -X -pworld stuff "account delete $delacc\n"
-		   echo "Account Deleted"
+		   echo "Account Deleted: $delacc"
 		   echo -n "ID: "
 		   read id
 		   echo -n "Comments: "

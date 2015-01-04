@@ -12,16 +12,17 @@ show_menu(){
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
     echo -e "${MENU}**************TrinityCore Server Management**************${NORMAL}"
-    echo -e "${MENU}**${NUMBER} 1)${MENU} Start Trinity with service checks ${NORMAL}"
-    echo -e "${MENU}**${NUMBER} 2)${MENU} Start Trinity without service checks ${NORMAL}"
-    echo -e "${MENU}**${NUMBER} 3)${MENU} Service Checks ${NORMAL}"
-    echo -e "${MENU}**${NUMBER} 4)${MENU} Account Management ${NORMAL}"
-    echo -e "${MENU}**${NUMBER} 5)${MENU} Account Permission Manager ${NORMAL}"
-    echo -e "${MENU}**${NUMBER} 6)${MENU} Server Configuration(TODO) ${NORMAL}"
-    echo -e "${MENU}**${NUMBER} 7)${MENU} Server Restarter(Background) ${NORMAL}"
-    echo -e "${MENU}**${NUMBER} 8)${MENU} Attach to Auth Screen ${NORMAL}"
-    echo -e "${MENU}**${NUMBER} 9)${MENU} Attach to World Screen ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 1)${MENU}  Start Trinity with service checks ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 2)${MENU}  Start Trinity without service checks ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 3)${MENU}  Service Checks ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 4)${MENU}  Account Manager ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 5)${MENU}  Account Permission Manager ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 6)${MENU}  Server Configuration(In Progress) ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 7)${MENU}  Server Restarter(Background) ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 8)${MENU}  Attach to Auth Screen ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 9)${MENU}  Attach to World Screen ${NORMAL}"
     echo -e "${MENU}**${NUMBER} 10)${MENU} MySQL Command Line ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 11)${MENU} Backup Manager(TODO) ${NORMAL}"
     echo -e "${MENU}*********************************************************${NORMAL}"
     echo -e "${ENTER_LINE}Please enter a menu option and enter or ${RED_TEXT}enter to exit. ${NORMAL}"
     read opt
@@ -76,39 +77,41 @@ while [ opt != '' ]
            ;;
 	6) clear;
 	   option_picked "Server Configuration";
-	   echo "Not written yet..."
-	   show_menu;
+	   	echo "In Progress..."
+	   	bash server_cnfg
+	   	show_menu;
 	   ;;
 	7) clear;
 	   option_picked "Server Restarter (Background)";
-	   screen -dmS restarter $RPATH/restarter
-	   show_menu;
+	   	screen -dmS restarter $RPATH/restarter
+	   	show_menu;
 	   ;;
 	8) clear;
 	   option_picked "Attach to Auth Server";
-	   echo "Press Ctrl+a+d to detach from the server without shutting it down."
-	   sleep 5
-	   screen -r auth
-	   show_menu;
+	   	echo "Press Ctrl+a+d to detach from the server without shutting it down."
+	   	sleep 5
+	   	screen -r auth
+	   	show_menu;
 	   ;;
 	9) clear;
 	   option_picked "Attach to World Server";
-	   echo "Press Ctrl+a+d to detach from the server without shutting it down."
-	   sleep 5
-	   screen -r world
-	   show_menu;
+	   	echo "Press Ctrl+a+d to detach from the server without shutting it down."
+	   	sleep 5
+	   	screen -r world
+	   	show_menu;
 	   ;;
 	10) clear;
 	    option_picked "MySQL Command Line";
-	    echo "Press Ctrl+c to exit the command line."
-	    sleep 4
-	    clear
-	    echo -n "MySQL Username: "
-	    read username
-	    echo -n "MySQL Password: "
-	    read password
-	    mysql -u $username -p$password
-	    show_menu;
+	    	echo "Press Ctrl+c to exit the command line."
+	    	sleep 4
+	    	clear
+	    	echo -n "MySQL Username: "
+	    	read username
+	    	echo -n "MySQL Password: "
+	    	read password
+		clear
+	    	mysql -u $username -p$password
+	    	show_menu;
 	    ;;
         x)exit;
         ;;
