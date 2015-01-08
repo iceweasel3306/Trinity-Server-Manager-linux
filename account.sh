@@ -21,6 +21,7 @@ show_menu2(){
     echo -e "${MENU}**${NUMBER} 1)${MENU} Create New User Account ${NORMAL}"
     echo -e "${MENU}**${NUMBER} 2)${MENU} Update User Account Password ${NORMAL}"
     echo -e "${MENU}**${NUMBER} 3)${MENU} Delete User Account ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 4)${MENU} Open Permission Manager ${NORMAL}"
     echo -e "${MENU}**********************************************************${NORMAL}"
     echo -e "${ENTER_LINE}Please enter a menu option and enter or ${RED_TEXT}enter to exit to main menu. ${NORMAL}"
     read opt
@@ -98,6 +99,12 @@ while [ opt != '' ]
 		   echo "Account Deleted: $delacc | Unix User: $USER | ID: $id | Comments: $com | $RIGHT_NOW" >> $ACC_LOG
 		   sleep 2
 		show_menu2;
+	;;
+
+	4) clear;
+	   option_picked2 "Account Permission Manager";
+	   bash permissions.sh
+	   show_menu2;
 	;;
         
 	x)exit;

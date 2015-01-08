@@ -5,15 +5,15 @@
 
 
 
-LPATH="/home/$USER/server/bin/logs" #Logging Path
-APATH="/home/$USER/server/bin" #auth path
-WPATH="/home/$USER/server/bin" #world path
-RPATH="/home/$USER/server"
+LPATH="/$HOME/server/bin/logs" #Logging Path
+APATH="/$HOME/server/bin" #auth path
+WPATH="/$HOME/server/bin" #world path
+RPATH="/$HOME/server"
 
 WORLD="worldserver" #world binary
 AUTH="authserver" #auth binary
 
-CONF="/home/$USER/server"
+CONF="/$HOME/server"
 CONFI="/etc"
 CONFIGS="$CONF/$confi"
 
@@ -34,5 +34,5 @@ AUTH_LOC="./bin/$AUTH"
 WORLD_LOC="./bin/$WORLD"
 RESTARTER_LOC="./restarter"
 
-FIRST_START=1
+FIRST_START=0
 RIGHT_NOW=$(date +"%x %r %Z")

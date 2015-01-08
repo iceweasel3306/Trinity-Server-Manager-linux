@@ -9,13 +9,14 @@ if [ $FIRST_START == 1 ]
 	mawk '{gsub("FIRST_START=1", "FIRST_START=0"); print }' config > config1
 	mv config $CONF/config2
 	mv config1 $CONF/config
+	rm config2
 	echo "First start: $FIRST_START"
 	echo "Use configuration manager to configure the tools to your system."
 	echo "The Server Manager is configured with its location expected within the same directory of your server files, but isn't too hard to reconfigure (see file config)"
-	echo "I'll have the configuration manager able to do that soon, right now it can configure the Server Manager for your system, binary"
+	echo "I'll have the configuration manager able to do that soon, right now it can configure the Server Manager for your server setup, binary"
 	echo "default for server files directory name is /server/"
 	echo "default for binaries is /server/bin/"
-	echo "default path for server files is /home/$USER/server/"
+	echo "default path for server files is /$HOME/server/"
 	sleep 1
 	echo
 	echo
@@ -89,42 +90,42 @@ while [ opt != '' ]
         1) clear;
            option_picked "TrinityCore Startup with service checks";
         	source config
-		bash startupwsc
+		bash startupwsc.sh
 		show_menu;
         ;;
 
         2) clear;
            option_picked "TrinityCore Startup without service checks";
 		source config
-            	bash startup
+            	bash startup.sh
 		show_menu;
         ;;
 
         3) clear;
            option_picked "TrinityCore Service Checks";
 		source config
-        	bash svcs
+        	bash svcs.sh
 		show_menu;
         ;;
 
         4) clear;
            option_picked "TrinityCore Account Management";
 		source config
-        	bash account
+        	bash account.sh
         	show_menu;
         ;;
 	
 	5) clear;
            option_picked "TrinityCore Account Permission Manager";
         	source config
-		bash permissions
+		bash permissions.sh
         	show_menu;
         ;;
 
 	6) clear;
 	   option_picked "Server Configuration";
 	   	echo "In Progress..."
-	   	bash server_cnfg
+	   	bash server_cnfg.sh
 	   	show_menu;
 	;;
 	
@@ -184,6 +185,12 @@ while [ opt != '' ]
 		clear
 	    	mysql -u $username -p$password
 	    	show_menu;
+	;;
+	
+	11) clear;
+	    option_picked "Backup Manager (In progress)"
+	    bash backup.sh
+	    show_menu;
 	;;
 
         x) exit;
