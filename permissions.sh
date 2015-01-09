@@ -24,6 +24,9 @@ show_menu3(){
     echo -e "${MENU}**${NUMBER} 4)${MENU} Administrator ${NORMAL}"
     echo -e "${MENU}**${NUMBER} 5)${MENU} Head Administrator ${NORMAL}"
     echo -e "${MENU}**${NUMBER} 6)${MENU} Owner Permissions/Commands ${RED_TEXT}(WARNING) ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 7)${MENU} Staff Accounts ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 8)${MENU} Full Rights Purge ${RED_TEXT}(WARNING) ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 9)${MENU} *Custom Permission* ${NORMAL}"
     echo -e "${MENU}*********************************************************${NORMAL}"
     echo -e "${ENTER_LINE}Please enter a menu option and enter or ${RED_TEXT}enter to exit. ${NORMAL}"
     read opt
@@ -253,11 +256,61 @@ while [ opt != '' ]
 	   echo -n "Comments: "
 	   read com
 	   echo "Promoted $acc to $ACCESS..."
-	   echo "Account: $acc | Access: $ACCESS | Unix User: $USER | ID: $id | Comments: $com | Time: $RIGHT_NOW" >> $PERM_LOG
+	   echo "$RIGHT_NOW: Account: $acc | Access: $ACCESS | Unix User: $USER | ID: $id | Comments: $com" >> $PERM_LOG
 	   sleep 4
 	   show_menu3;
 	;;
+	
+	7) clear;
+	   option_picked3 "Staff Accounts";
+	   mysql -u $umysql -p$pmysql auth <<EOFMYSQL
+	   SELECT account_access.id, account_access.gmlevel, 
+	   (SELECT username FROM account WHERE account.id=account_access.id) AS username  
+	   FROM account_access WHERE gmlevel > 0;
+	   EOFMYSQL
+	   echo
+	   read -rsp $'Press any key to continue...\n' -n1 key
+	   show_menu;
+	;;
 
+	8) clear;
+	   option_picked3 "Full Rights Purge:
+	   ACCESS="PURGED"
+	   
+	   echo -n "Account ID: "
+	   read acc
+	   sleep 4
+	   echo "Are you sure you want to completely strip this account of ALL rights, commands, and security level?: "
+	   echo -n "$acc will be completely purged: "
+	   echo
+	   read -rsp $'Press any key to continue...\n' -n1 key
+	   mysql -u $umysql -p$pmysql auth <<EOFMYSQL
+	   DELETE FROM `rbac_account_permissions` WHERE accountId="$acc";
+	   DELETE FROM `account_access` WHERE id="$acc"
+	   EOFMYSQL
+	   sleep 2
+	   echo -n "Do you want to lock the account as well? 1(Yes) or 0(No): "
+	   read ans
+	   if [ $ans == 1 ]
+	   then
+	   	mysql -u $umysql -p$pmysql auth <<EOFMYSQL
+	   	UPDATE `account` SET locked=1;
+	   	EOFMYSQL
+	   	echo "Account locked and all rights have been removed"
+	   	sleep 3
+	   	LOCK="Yes"
+	   else
+	   	echo "Account not locked, privledge removal was sucessful."
+	   	LOCK="No"
+	   fi
+	   echo -n "ID: "
+	   read id
+	   echo -n "Comments: "
+	   read com
+	   echo "$RIGHT_NOW: Account: $acc | Access: $ACCESS | Lock: $LOCK | Unix User: $USER | ID: $id | Comments: $com" >> $PERM_LOG
+	   show_menu3;
+	;;
+	   
         x) exit;
         ;;
 
@@ -265,7 +318,7 @@ while [ opt != '' ]
         ;;
 
         *) clear;
-           option_picked "Pick an option from the menu";
+           option_picked3 "Pick an option from the menu";
            show_menu3;
         ;;
 
