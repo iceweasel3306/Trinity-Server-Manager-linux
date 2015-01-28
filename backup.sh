@@ -48,20 +48,55 @@ while [ opt != '' ]
 	
 	2) clear;
 	   option_picked5 "MySQL Backup"
-	   mysqldump -u $umysql -p$pmysql --all-databases > $BPATH/mysql/full_$RIGHT_NOW.sql
-	   echo "All Databases backed up, you can find your full backup file within $BPATH"
-	   sleep 8 
+	   echo "Yes(1) or No(0)"
+	   echo -n "Do you want to backup all databases?  This function is currently set to backup to a .sql dump file."
+	   read ans
+	   if [ ans == 1 ]
+		then
+			mysqldump -u $umysql -p$pmysql --all-databases > $BPATH/mysql/full_$RIGHT_NOW.sql
+			echo "All Databases backed up, you can find your full backup file within $BPATH"
+			sleep 8
+			echo "$RIGHT_NOW: All Databases backed up"
+		else
+			clear;
+			echo "Backup Cancelled..."
+			sleep 3
+			show_menu5;
+	   fi
 	   show_menu5;
+	;;
+	
+	3) clear;
+	   option_picked5 "Server File Backup"
+	   echo "Function incomplete..."
+	   sleep 3
+	   show_menu;
+    ;;
+	
+	4) clear;
+	   option_picked5 "Full Server Backup";
+	   echo "Function incomplete..."
+	   sleep 3
+	   show_menu5;
+    ;;
+	
+	5) clear;
+	   option_picked5 "Auto Backup Setup"
+	   echo "Function incomplete..."
+	   sleep 3
+	   show_menu5;
+    ;;
+	
 	x) exit
-        ;;
+    ;;
+	
+	\n) exit;
+    ;;
 
-        \n) exit;
-        ;;
-
-        *) clear;
-           option_picked "Pick an option from the menu";
-           show_menu3;
-        ;;
+    *) clear;
+       option_picked "Pick an option from the menu";
+       show_menu5;
+    ;;
 
     esac
 fi
